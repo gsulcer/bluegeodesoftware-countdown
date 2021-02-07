@@ -1,5 +1,6 @@
 package com.bluegeodesoftware.countdown
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -27,6 +28,8 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var mainHandler: Handler
 
+    private val newTargetDateActivityRequestCode = 1
+
     private val updateTextTask = object : Runnable {
         @RequiresApi(Build.VERSION_CODES.O)
         override fun run() {
@@ -45,20 +48,6 @@ class MainActivity : AppCompatActivity() {
 
         mainHandler = Handler(Looper.getMainLooper())
 
-        val dateView = findViewById<CalendarView>(R.id.calendarView)
-
-        // get a calendar instance
-        val calendar = Calendar.getInstance()
-
-        // calendar view date change listener
-        dateView.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            // set the calendar date as calendar view selected date
-            calendar.set(year,month,dayOfMonth)
-
-            // set this date as calendar view selected date
-            dateView.date = calendar.timeInMillis
-        }
-
         val recyclerView = findViewById<RecyclerView>(R.id.savedTimersView)
         val adapter = TargetDateListAdapter {date -> adapterOnClick(date)}
         recyclerView.adapter = adapter
@@ -68,6 +57,35 @@ class MainActivity : AppCompatActivity() {
             dates?.let { adapter.submitList(it) }
         })
 
+        val fab: View = findViewById(R.id.floatingActionButton)
+        fab.setOnClickListener {
+            fabOnClick()
+        }
+    }
+
+    private fun fabOnClick() {
+        val intent = Intent(this, AddTargetDateActivity::class.java)
+        startActivityForResult(intent, newTargetDateActivityRequestCode)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, intentData)
+
+        if (requestCode == newTargetDateActivityRequestCode && resultCode == Activity.RESULT_OK) {
+            intentData?.let { data ->
+                val epoch_time = data.getLongExtra(EXTRA_DATE, 0)
+                val date = epoch_time / 1000
+
+                var newDate = LocalDateTime.ofEpochSecond(date, 0, ZoneOffset.UTC)
+                newDate = newDate.minusSeconds(newDate.second.toLong())
+                newDate = newDate.minusHours(newDate.hour.toLong())
+                newDate = newDate.minusMinutes(newDate.minute.toLong())
+
+                val targetDate = TargetDate(epoch_time = newDate.toEpochSecond(ZoneOffset.UTC))
+
+                targetDateViewModel.insert(targetDate)
+            }
+        }
     }
 
     override fun onPause() {
@@ -95,24 +113,5 @@ class MainActivity : AppCompatActivity() {
            putExtra(EXTRA_DATE, targetDate.epoch_time)
        }
        startActivity(intent)
-    }
-
-    fun sendMessage(view: View) {
-
-        val dateView = findViewById<CalendarView>(R.id.calendarView)
-        val date = dateView.date / 1000
-
-        var newDate = LocalDateTime.ofEpochSecond(date, 0, ZoneOffset.UTC)
-        newDate = newDate.minusHours(newDate.hour.toLong())
-        newDate = newDate.minusMinutes(newDate.minute.toLong())
-
-        val targetDate = TargetDate(epoch_time = newDate.toEpochSecond(ZoneOffset.UTC))
-
-        targetDateViewModel.insert(targetDate)
-
-//        val intent = Intent(this, DisplayMessageActivity::class.java).apply {
-//            putExtra(EXTRA_DATE, date);
-//        }
-//        startActivity(intent);
     }
 }

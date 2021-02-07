@@ -10,12 +10,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Countdown1">
-        <activity android:name="com.bluegeodesoftware.countdown.DisplayMessageActivity">
+        <activity android:name=".AddTargetDateActivity"></activity>
+        <activity android:name=".DisplayMessageActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.bluegeodesoftware.countdown.MainActivity"  />
+                android:value="com.bluegeodesoftware.countdown.MainActivity" />
         </activity>
-        <activity android:name="com.bluegeodesoftware.countdown.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
