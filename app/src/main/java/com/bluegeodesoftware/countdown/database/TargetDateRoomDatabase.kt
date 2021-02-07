@@ -4,14 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.bluegeodesoftware.countdown.dao.TargetDateDao
 import com.bluegeodesoftware.countdown.entity.TargetDate
 
 
 @Database(entities = [TargetDate::class], version = 1, exportSchema = true)
-public abstract class TargetDateRoomDatabase : RoomDatabase() {
+abstract class TargetDateRoomDatabase : RoomDatabase() {
 
     abstract fun targetDateDao(): TargetDateDao
 

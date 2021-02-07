@@ -2,7 +2,6 @@ package com.bluegeodesoftware.countdown
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,7 +9,7 @@ import android.view.View
 import android.widget.CalendarView
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -93,9 +92,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun adapterOnClick(targetDate: TargetDate) {
         val intent = Intent(this, DisplayMessageActivity::class.java).apply {
-           putExtra(EXTRA_DATE, targetDate.epoch_time);
+           putExtra(EXTRA_DATE, targetDate.epoch_time)
        }
-       startActivity(intent);
+       startActivity(intent)
     }
 
     fun sendMessage(view: View) {

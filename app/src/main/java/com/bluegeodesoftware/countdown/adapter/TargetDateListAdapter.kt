@@ -1,17 +1,12 @@
 package com.bluegeodesoftware.countdown.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bluegeodesoftware.countdown.CountdownApplication
-import com.bluegeodesoftware.countdown.DisplayMessageActivity
-import com.bluegeodesoftware.countdown.EXTRA_DATE
 import com.bluegeodesoftware.countdown.R
 import com.bluegeodesoftware.countdown.entity.TargetDate
 import java.time.Duration
@@ -43,9 +38,9 @@ class TargetDateListAdapter(private val onClick: (TargetDate) -> Unit) : ListAda
         val diff = Duration.between(now, targetDate)
         var diffMinutes = (diff.seconds / 60).toInt()
         val diffSeconds = (diff.seconds % 60).toInt()
-        var diffHours = (diffMinutes / 60).toInt()
+        var diffHours = (diffMinutes / 60)
         diffMinutes %= 60
-        var diffDays = (diffHours / 24).toInt()
+        val diffDays = (diffHours / 24)
         diffHours %= 24
 
         var countDownString = holder.itemView.resources.getQuantityString(

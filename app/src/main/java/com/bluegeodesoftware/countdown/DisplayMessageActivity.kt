@@ -52,9 +52,9 @@ class DisplayMessageActivity : AppCompatActivity() {
         val diff = Duration.between(now, targetDate)
         var diffMinutes = (diff.seconds / 60).toInt()
         val diffSeconds = (diff.seconds % 60).toInt()
-        var diffHours = (diffMinutes / 60).toInt()
+        var diffHours = (diffMinutes / 60)
         diffMinutes %= 60
-        var diffDays = ( diffHours / 24).toInt()
+        val diffDays = ( diffHours / 24)
         diffHours %= 24
 
         var countDownString = resources.getQuantityString(R.plurals.countdown_with_days, diffDays, diffDays, diffHours, diffMinutes, diffSeconds)

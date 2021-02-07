@@ -4,7 +4,6 @@ import androidx.lifecycle.*
 import com.bluegeodesoftware.countdown.entity.TargetDate
 import com.bluegeodesoftware.countdown.repository.TargetDateRepository
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.flow.Flow
 
 class TargetDateViewModel(private val repository: TargetDateRepository) : ViewModel() {
 
