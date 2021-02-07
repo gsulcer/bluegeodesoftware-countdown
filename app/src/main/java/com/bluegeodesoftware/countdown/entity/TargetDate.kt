@@ -3,6 +3,9 @@ package com.bluegeodesoftware.countdown.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.time.Duration
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 @Entity(tableName = "target_date")
 data class TargetDate(

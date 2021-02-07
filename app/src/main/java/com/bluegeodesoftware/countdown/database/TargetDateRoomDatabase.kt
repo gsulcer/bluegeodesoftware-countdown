@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.bluegeodesoftware.countdown.dao.TargetDateDao
 import com.bluegeodesoftware.countdown.entity.TargetDate
 
@@ -18,6 +20,7 @@ public abstract class TargetDateRoomDatabase : RoomDatabase() {
         // same time.
         @Volatile
         private var INSTANCE: TargetDateRoomDatabase? = null
+
 
         fun getDatabase(context: Context): TargetDateRoomDatabase {
             // if the INSTANCE is not null, then return it,
