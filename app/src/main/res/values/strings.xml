@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Countdown</string>
     <string name="button_start">Start</string>
+    <string name="button_clear_timers">Clear All</string>
     <string name="countdown_without_days">%02d:%02d:%02d</string>
     <plurals name="countdown_with_days">
         <item quantity="one">%d day %02d:%02d:%02d</item>
