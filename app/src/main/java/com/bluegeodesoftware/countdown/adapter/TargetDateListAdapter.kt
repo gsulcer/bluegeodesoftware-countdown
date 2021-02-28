@@ -31,7 +31,7 @@ class TargetDateListAdapter(private val onClick: (TargetDate) -> Unit) : ListAda
     ) {
         val current = getItem(position)
         val targetName = current.target_name
-        var targetDate = LocalDateTime.ofEpochSecond(current.epoch_time, 0, ZoneOffset.UTC)
+        val targetDate = LocalDateTime.ofEpochSecond(current.epoch_time, 0, ZoneOffset.UTC)
 
         val now = LocalDateTime.now()
 

@@ -81,7 +81,7 @@ class ViewTargetActivity : AppCompatActivity() {
         }
 
         findViewById<TextView>(R.id.textView2).apply {
-            text = target.target_name ?: ""
+            text = target.target_name
         }
 
         findViewById<TextView>(R.id.dateTarget).apply {

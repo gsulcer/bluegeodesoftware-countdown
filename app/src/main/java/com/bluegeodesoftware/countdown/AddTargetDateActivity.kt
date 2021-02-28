@@ -6,18 +6,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
-import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import com.bluegeodesoftware.countdown.entity.TargetDate
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.*
-import kotlin.math.min
 
 class AddTargetDateActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,14 +34,14 @@ class AddTargetDateActivity : AppCompatActivity() {
         val timePicker = findViewById<TimePicker>(R.id.timePicker1)
         timePicker.visibility = INVISIBLE
 
-        targetView.setOnClickListener { view ->
+        targetView.setOnClickListener {
             timePicker.visibility = INVISIBLE
             dateView.visibility = VISIBLE
         }
 
 
         // calendar view date change listener
-        dateView.setOnDateChangeListener { view, year, month, dayOfMonth ->
+        dateView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             // set the calendar date as calendar view selected date
             calendar.set(year,month,dayOfMonth)
 
@@ -61,7 +58,7 @@ class AddTargetDateActivity : AppCompatActivity() {
             timePicker.visibility = VISIBLE
         }
 
-        timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
+        timePicker.setOnTimeChangedListener { _, hourOfDay, minute ->
             targetDate = targetDate.withHour(hourOfDay)
             targetDate = targetDate.withMinute(minute)
 
@@ -80,7 +77,7 @@ class AddTargetDateActivity : AppCompatActivity() {
         return super.dispatchTouchEvent(ev)
     }
 
-    fun saveDate(view: View) {
+    fun saveDate() {
         val resultIntent = Intent()
 
         val dateView = findViewById<CalendarView>(R.id.addDateCalendarView)

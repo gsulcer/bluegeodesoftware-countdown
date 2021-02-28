@@ -18,8 +18,6 @@ import com.bluegeodesoftware.countdown.entity.TargetDate
 import com.bluegeodesoftware.countdown.viewmodel.TargetDateViewModel
 import com.bluegeodesoftware.countdown.viewmodel.TargetDateViewModelFactory
 import java.io.Serializable
-import java.time.LocalDateTime
-import java.time.ZoneOffset
 
 const val EXTRA_TARGET = "com.bluegeodesoftware.countdown.TARGET"
 const val EXTRA_ID = "com.bluegeodesoftware.countdown.ID"
@@ -77,19 +75,15 @@ class MainActivity : AppCompatActivity() {
 
         if (requestCode == newTargetDateActivityRequestCode && resultCode == Activity.RESULT_OK) {
             intentData?.let { data ->
-                val epoch_time = data.getLongExtra(EXTRA_DATE, 0)
+                val epochTime = data.getLongExtra(EXTRA_DATE, 0)
                 val targetName = data.getStringExtra(EXTRA_TARGET_NAME)
                 val alarm = data.getBooleanExtra(EXTRA_ALARM, false)
                 val recur = data.getBooleanExtra(EXTRA_RECUR, false)
 
-                val date = epoch_time / 1000
-                var newDate = LocalDateTime.ofEpochSecond(date, 0, ZoneOffset.UTC)
-//                newDate = newDate.minusSeconds(newDate.second.toLong())
-//                newDate = newDate.minusHours(newDate.hour.toLong())
-//                newDate = newDate.minusMinutes(newDate.minute.toLong())
+                val date = epochTime / 1000
 
                 val targetDate = TargetDate(
-                    epoch_time = newDate.toEpochSecond(ZoneOffset.UTC),
+                    epoch_time = date,
                     target_name = targetName ?: "",
                     alarm = alarm,
                     auto_recur = recur
@@ -116,7 +110,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter?.notifyDataSetChanged()
     }
 
-    fun clearAllTimers(view: View) {
+    fun clearAllTimers() {
         targetDateViewModel.deleteAll()
     }
 
@@ -124,7 +118,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, ViewTargetActivity::class.java).apply {
             putExtra(EXTRA_TARGET, targetDate as Serializable)
             putExtra(EXTRA_ID, targetDate.id)
-           putExtra(EXTRA_DATE, targetDate.epoch_time)
+            putExtra(EXTRA_DATE, targetDate.epoch_time)
        }
        startActivity(intent)
     }
