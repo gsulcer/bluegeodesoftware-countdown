@@ -12,7 +12,11 @@ data class TargetDate(
     @ColumnInfo(name = "target_name") val target_name: String,
     @ColumnInfo(name = "alarm") val alarm: Boolean,
     @ColumnInfo(name = "auto_recur") val auto_recur: Boolean
-): Serializable
-{
-    constructor(epoch_time: Long, target_name: String, alarm: Boolean, auto_recur: Boolean) : this(0, epoch_time, target_name, alarm, auto_recur)
+) : Serializable {
+    constructor(
+        epoch_time: Long,
+        target_name: String,
+        alarm: Boolean,
+        auto_recur: Boolean
+    ) : this(0, epoch_time, target_name, alarm, auto_recur)
 }

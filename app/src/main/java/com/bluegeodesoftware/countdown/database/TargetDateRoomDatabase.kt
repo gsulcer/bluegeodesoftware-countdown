@@ -23,7 +23,8 @@ abstract class TargetDateRoomDatabase : RoomDatabase() {
 
         private val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("""
+                database.execSQL(
+                    """
                 CREATE TABLE new_target_date (
                     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                     epoch_time INTEGER NOT NULL, 
@@ -31,11 +32,14 @@ abstract class TargetDateRoomDatabase : RoomDatabase() {
                     alarm INTEGER NOT NULL DEFAULT 0, 
                     auto_recur INTEGER NOT NULL DEFAULT 0
                 )
-                """.trimIndent())
-                database.execSQL("""
+                """.trimIndent()
+                )
+                database.execSQL(
+                    """
                 INSERT INTO new_target_date (id, epoch_time, target_name, alarm, auto_recur)
                 SELECT id, epoch_time, '', 0, 0 FROM target_date
-                """.trimIndent())
+                """.trimIndent()
+                )
                 database.execSQL("DROP TABLE target_date")
                 database.execSQL("ALTER TABLE new_target_date RENAME TO target_date")
             }

@@ -28,7 +28,12 @@ class AddTargetDateActivity : AppCompatActivity() {
         var targetDate = LocalDateTime.ofEpochSecond(dateView.date / 1000, 0, ZoneOffset.UTC)
 
         var targetView = findViewById<TextView>(R.id.textViewDateTime).apply {
-            text = targetDate.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.MEDIUM))
+            text = targetDate.format(
+                DateTimeFormatter.ofLocalizedDateTime(
+                    FormatStyle.FULL,
+                    FormatStyle.MEDIUM
+                )
+            )
         }
 
         val timePicker = findViewById<TimePicker>(R.id.timePicker1)
@@ -43,7 +48,7 @@ class AddTargetDateActivity : AppCompatActivity() {
         // calendar view date change listener
         dateView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             // set the calendar date as calendar view selected date
-            calendar.set(year,month,dayOfMonth)
+            calendar.set(year, month, dayOfMonth)
 
             // set this date as calendar view selected date
             dateView.date = calendar.timeInMillis
@@ -51,7 +56,12 @@ class AddTargetDateActivity : AppCompatActivity() {
             targetDate = LocalDateTime.ofEpochSecond(dateView.date / 1000, 0, ZoneOffset.UTC)
 
             targetView = findViewById<TextView>(R.id.textViewDateTime).apply {
-                text = targetDate.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.MEDIUM))
+                text = targetDate.format(
+                    DateTimeFormatter.ofLocalizedDateTime(
+                        FormatStyle.FULL,
+                        FormatStyle.MEDIUM
+                    )
+                )
             }
 
             dateView.visibility = INVISIBLE
@@ -63,7 +73,12 @@ class AddTargetDateActivity : AppCompatActivity() {
             targetDate = targetDate.withMinute(minute)
 
             targetView = findViewById<TextView>(R.id.textViewDateTime).apply {
-                text = targetDate.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.MEDIUM))
+                text = targetDate.format(
+                    DateTimeFormatter.ofLocalizedDateTime(
+                        FormatStyle.FULL,
+                        FormatStyle.MEDIUM
+                    )
+                )
             }
         }
     }

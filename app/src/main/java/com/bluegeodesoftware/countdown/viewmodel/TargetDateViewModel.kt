@@ -33,7 +33,8 @@ class TargetDateViewModel(private val repository: TargetDateRepository) : ViewMo
     }
 }
 
-class TargetDateViewModelFactory(private val repository: TargetDateRepository) : ViewModelProvider.Factory {
+class TargetDateViewModelFactory(private val repository: TargetDateRepository) :
+    ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TargetDateViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")

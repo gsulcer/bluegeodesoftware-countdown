@@ -15,7 +15,8 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
-class TargetDateListAdapter(private val onClick: (TargetDate) -> Unit) : ListAdapter<TargetDate, TargetDateListAdapter.TargetDateViewHolder>(TargetDateComparator()) {
+class TargetDateListAdapter(private val onClick: (TargetDate) -> Unit) :
+    ListAdapter<TargetDate, TargetDateListAdapter.TargetDateViewHolder>(TargetDateComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TargetDateViewHolder {
         return TargetDateViewHolder.create(parent, onClick)
@@ -61,10 +62,21 @@ class TargetDateListAdapter(private val onClick: (TargetDate) -> Unit) : ListAda
             )
         }
 
-        holder.bind(current, targetName, targetDate.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.MEDIUM)), countDownString)
+        holder.bind(
+            current,
+            targetName,
+            targetDate.format(
+                DateTimeFormatter.ofLocalizedDateTime(
+                    FormatStyle.FULL,
+                    FormatStyle.MEDIUM
+                )
+            ),
+            countDownString
+        )
     }
 
-    class TargetDateViewHolder(itemView: View, val onClick: (TargetDate) -> Unit) : RecyclerView.ViewHolder(itemView) {
+    class TargetDateViewHolder(itemView: View, val onClick: (TargetDate) -> Unit) :
+        RecyclerView.ViewHolder(itemView) {
         private val targetNameView: TextView = itemView.findViewById(R.id.textViewTargetName)
         private val targetDateItemView: TextView = itemView.findViewById(R.id.targetDateListItem)
         private val countdownItemView: TextView = itemView.findViewById(R.id.countdownTextView)

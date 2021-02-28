@@ -23,7 +23,7 @@ const val EXTRA_TARGET = "com.bluegeodesoftware.countdown.TARGET"
 const val EXTRA_ID = "com.bluegeodesoftware.countdown.ID"
 const val EXTRA_DATE = "com.bluegeodesoftware.countdown.DATE"
 const val EXTRA_TARGET_NAME = "com.bluegeodesoftware.countdown.TARGET_NAME"
-const val EXTRA_ALARM  = "com.bluegeodesoftware.countdown.ALARM"
+const val EXTRA_ALARM = "com.bluegeodesoftware.countdown.ALARM"
 const val EXTRA_RECUR = "com.bluegeodesoftware.countdown.RECUR"
 
 class MainActivity : AppCompatActivity() {
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         mainHandler = Handler(Looper.getMainLooper())
 
         val recyclerView = findViewById<RecyclerView>(R.id.savedTimersView)
-        val adapter = TargetDateListAdapter {date -> adapterOnClick(date)}
+        val adapter = TargetDateListAdapter { date -> adapterOnClick(date) }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
         targetDateViewModel.allTargetDates.observe(this, Observer { dates ->
@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity() {
             putExtra(EXTRA_TARGET, targetDate as Serializable)
             putExtra(EXTRA_ID, targetDate.id)
             putExtra(EXTRA_DATE, targetDate.epoch_time)
-       }
-       startActivity(intent)
+        }
+        startActivity(intent)
     }
 }
