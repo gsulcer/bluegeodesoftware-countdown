@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import android.widget.CalendarView
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -18,11 +17,16 @@ import com.bluegeodesoftware.countdown.adapter.TargetDateListAdapter
 import com.bluegeodesoftware.countdown.entity.TargetDate
 import com.bluegeodesoftware.countdown.viewmodel.TargetDateViewModel
 import com.bluegeodesoftware.countdown.viewmodel.TargetDateViewModelFactory
+import java.io.Serializable
 import java.time.LocalDateTime
 import java.time.ZoneOffset
-import java.util.*
 
+const val EXTRA_TARGET = "com.bluegeodesoftware.countdown.TARGET"
+const val EXTRA_ID = "com.bluegeodesoftware.countdown.ID"
 const val EXTRA_DATE = "com.bluegeodesoftware.countdown.DATE"
+const val EXTRA_TARGET_NAME = "com.bluegeodesoftware.countdown.TARGET_NAME"
+const val EXTRA_ALARM  = "com.bluegeodesoftware.countdown.ALARM"
+const val EXTRA_RECUR = "com.bluegeodesoftware.countdown.RECUR"
 
 class MainActivity : AppCompatActivity() {
 
@@ -74,14 +78,22 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == newTargetDateActivityRequestCode && resultCode == Activity.RESULT_OK) {
             intentData?.let { data ->
                 val epoch_time = data.getLongExtra(EXTRA_DATE, 0)
+                val targetName = data.getStringExtra(EXTRA_TARGET_NAME)
+                val alarm = data.getBooleanExtra(EXTRA_ALARM, false)
+                val recur = data.getBooleanExtra(EXTRA_RECUR, false)
+
                 val date = epoch_time / 1000
-
                 var newDate = LocalDateTime.ofEpochSecond(date, 0, ZoneOffset.UTC)
-                newDate = newDate.minusSeconds(newDate.second.toLong())
-                newDate = newDate.minusHours(newDate.hour.toLong())
-                newDate = newDate.minusMinutes(newDate.minute.toLong())
+//                newDate = newDate.minusSeconds(newDate.second.toLong())
+//                newDate = newDate.minusHours(newDate.hour.toLong())
+//                newDate = newDate.minusMinutes(newDate.minute.toLong())
 
-                val targetDate = TargetDate(epoch_time = newDate.toEpochSecond(ZoneOffset.UTC))
+                val targetDate = TargetDate(
+                    epoch_time = newDate.toEpochSecond(ZoneOffset.UTC),
+                    target_name = targetName ?: "",
+                    alarm = alarm,
+                    auto_recur = recur
+                )
 
                 targetDateViewModel.insert(targetDate)
             }
@@ -109,7 +121,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun adapterOnClick(targetDate: TargetDate) {
-        val intent = Intent(this, DisplayMessageActivity::class.java).apply {
+        val intent = Intent(this, ViewTargetActivity::class.java).apply {
+            putExtra(EXTRA_TARGET, targetDate as Serializable)
+            putExtra(EXTRA_ID, targetDate.id)
            putExtra(EXTRA_DATE, targetDate.epoch_time)
        }
        startActivity(intent)

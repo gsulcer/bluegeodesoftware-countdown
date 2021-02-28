@@ -1,0 +1,58 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "ea91a56878d766fcda0a5a81db9c9170",
+    "entities": [
+      {
+        "tableName": "target_date",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `epoch_time` INTEGER NOT NULL, `target_name` TEXT NOT NULL, `alarm` INTEGER NOT NULL, `auto_recur` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "epoch_time",
+            "columnName": "epoch_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "target_name",
+            "columnName": "target_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "alarm",
+            "columnName": "alarm",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "auto_recur",
+            "columnName": "auto_recur",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ea91a56878d766fcda0a5a81db9c9170')"
+    ]
+  }
+}

@@ -13,6 +13,7 @@ import java.time.Duration
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 class TargetDateListAdapter(private val onClick: (TargetDate) -> Unit) : ListAdapter<TargetDate, TargetDateListAdapter.TargetDateViewHolder>(TargetDateComparator()) {
 
@@ -29,9 +30,8 @@ class TargetDateListAdapter(private val onClick: (TargetDate) -> Unit) : ListAda
         holder: TargetDateViewHolder
     ) {
         val current = getItem(position)
+        val targetName = current.target_name
         var targetDate = LocalDateTime.ofEpochSecond(current.epoch_time, 0, ZoneOffset.UTC)
-        targetDate = targetDate.minusHours(targetDate.hour.toLong())
-        targetDate = targetDate.minusMinutes(targetDate.minute.toLong())
 
         val now = LocalDateTime.now()
 
@@ -61,10 +61,11 @@ class TargetDateListAdapter(private val onClick: (TargetDate) -> Unit) : ListAda
             )
         }
 
-        holder.bind(current, targetDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy")), countDownString)
+        holder.bind(current, targetName, targetDate.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.MEDIUM)), countDownString)
     }
 
     class TargetDateViewHolder(itemView: View, val onClick: (TargetDate) -> Unit) : RecyclerView.ViewHolder(itemView) {
+        private val targetNameView: TextView = itemView.findViewById(R.id.textViewTargetName)
         private val targetDateItemView: TextView = itemView.findViewById(R.id.targetDateListItem)
         private val countdownItemView: TextView = itemView.findViewById(R.id.countdownTextView)
         private var currentTargetDate: TargetDate? = null
@@ -77,7 +78,8 @@ class TargetDateListAdapter(private val onClick: (TargetDate) -> Unit) : ListAda
             }
         }
 
-        fun bind(targetDate: TargetDate, text: String?, countdown: String) {
+        fun bind(targetDate: TargetDate, targetName: String, text: String?, countdown: String) {
+            targetNameView.text = targetName
             currentTargetDate = targetDate
             targetDateItemView.text = text
             countdownItemView.text = countdown

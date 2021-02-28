@@ -23,6 +23,14 @@ class TargetDateViewModel(private val repository: TargetDateRepository) : ViewMo
     fun deleteAll() = viewModelScope.launch {
         repository.deleteAll()
     }
+
+    fun deleteById(id: Int) = viewModelScope.launch {
+        repository.deleteById(id)
+    }
+
+    fun delete(date: TargetDate) = viewModelScope.launch {
+        repository.delete(date)
+    }
 }
 
 class TargetDateViewModelFactory(private val repository: TargetDateRepository) : ViewModelProvider.Factory {

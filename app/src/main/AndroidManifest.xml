@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Countdown1">
         <activity android:name=".AddTargetDateActivity"></activity>
-        <activity android:name=".DisplayMessageActivity">
+        <activity android:name=".ViewTargetActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.bluegeodesoftware.countdown.MainActivity" />

@@ -25,4 +25,16 @@ class TargetDateRepository(private val targetDateDao: TargetDateDao) {
     suspend fun deleteAll() {
         targetDateDao.deleteAll()
     }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun deleteById(id: Int) {
+        targetDateDao.deleteById(id)
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun delete(date: TargetDate) {
+        targetDateDao.delete(date)
+    }
 }

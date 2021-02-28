@@ -4,15 +4,20 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.widget.ImageButton
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.bluegeodesoftware.countdown.entity.TargetDate
+import com.bluegeodesoftware.countdown.viewmodel.TargetDateViewModel
+import com.bluegeodesoftware.countdown.viewmodel.TargetDateViewModelFactory
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
-class DisplayMessageActivity : AppCompatActivity() {
+class ViewTargetActivity : AppCompatActivity() {
 
     lateinit var mainHandler: Handler
 
@@ -24,12 +29,24 @@ class DisplayMessageActivity : AppCompatActivity() {
         }
     }
 
+    private val targetDateViewModel: TargetDateViewModel by viewModels {
+        TargetDateViewModelFactory((application as CountdownApplication).repository)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_display_message)
+        setContentView(R.layout.activity_view_target)
 
         mainHandler = Handler(Looper.getMainLooper())
 
+        val target = intent.getSerializableExtra(EXTRA_TARGET) as TargetDate
+
+        val deleteButton = findViewById<ImageButton>(R.id.deleteButton)
+        deleteButton.setOnClickListener {
+            targetDateViewModel.deleteById(target.id)
+
+            finish()
+        }
     }
 
     override fun onPause() {
@@ -44,9 +61,9 @@ class DisplayMessageActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun minusOneSecond() {
-        var targetDate = LocalDateTime.ofEpochSecond(intent.getLongExtra(EXTRA_DATE, 0), 0, ZoneOffset.UTC)
-        targetDate = targetDate.minusHours(targetDate.hour.toLong())
-        targetDate = targetDate.minusMinutes(targetDate.minute.toLong())
+        val target = intent.getSerializableExtra(EXTRA_TARGET) as TargetDate
+        val targetDate = LocalDateTime.ofEpochSecond(intent.getLongExtra(EXTRA_DATE, 0), 0, ZoneOffset.UTC)
+
         val now = LocalDateTime.now()
 
         val diff = Duration.between(now, targetDate)
@@ -63,11 +80,15 @@ class DisplayMessageActivity : AppCompatActivity() {
             countDownString = getString(R.string.countdown_without_days, diffHours, diffMinutes, diffSeconds)
         }
 
-        val targetView = findViewById<TextView>(R.id.dateTarget).apply {
+        findViewById<TextView>(R.id.textView2).apply {
+            text = target.target_name ?: ""
+        }
+
+        findViewById<TextView>(R.id.dateTarget).apply {
             text = targetDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))
         }
 
-        val diffView = findViewById<TextView>(R.id.differenceView).apply {
+        findViewById<TextView>(R.id.differenceView).apply {
             text = countDownString
         }
     }

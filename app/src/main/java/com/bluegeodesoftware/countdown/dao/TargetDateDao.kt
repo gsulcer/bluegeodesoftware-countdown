@@ -1,9 +1,6 @@
 package com.bluegeodesoftware.countdown.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.bluegeodesoftware.countdown.entity.TargetDate
 import kotlinx.coroutines.flow.Flow
 
@@ -18,4 +15,10 @@ interface TargetDateDao {
 
     @Query("DELETE FROM target_date")
     suspend fun deleteAll()
+
+    @Query("DELETE FROM target_date WHERE id = :id")
+    suspend fun deleteById(id: Int)
+
+    @Delete
+    suspend fun delete(date: TargetDate)
 }

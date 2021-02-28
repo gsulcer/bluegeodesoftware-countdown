@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Countdown</string>
     <string name="button_start">Start</string>
+    <string name="target_name">Target Name</string>
+    <string name="switch_alarm">Sound Alarm when countdown reaches 0</string>
+    <string name="switch_autorecur">Auto Recur when countdown reaches 0</string>
     <string name="button_clear_timers">Clear All</string>
     <string name="button_save">Save</string>
     <string name="countdown_without_days">%02d:%02d:%02d</string>
