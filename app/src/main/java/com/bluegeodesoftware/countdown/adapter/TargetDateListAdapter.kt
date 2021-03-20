@@ -32,35 +32,9 @@ class TargetDateListAdapter(private val onClick: (TargetDate) -> Unit) :
     ) {
         val current = getItem(position)
         val targetName = current.target_name
-        val targetDate = LocalDateTime.ofEpochSecond(current.epoch_time, 0, ZoneOffset.UTC)
+        val targetDate = current.getLocaleTarget()
 
-        val now = LocalDateTime.now()
-
-        val diff = Duration.between(now, targetDate)
-        var diffMinutes = (diff.seconds / 60).toInt()
-        val diffSeconds = (diff.seconds % 60).toInt()
-        var diffHours = (diffMinutes / 60)
-        diffMinutes %= 60
-        val diffDays = (diffHours / 24)
-        diffHours %= 24
-
-        var countDownString = holder.itemView.resources.getQuantityString(
-            R.plurals.countdown_with_days,
-            diffDays,
-            diffDays,
-            diffHours,
-            diffMinutes,
-            diffSeconds
-        )
-
-        if (diffDays <= 0) {
-            countDownString = holder.itemView.resources.getString(
-                R.string.countdown_without_days,
-                diffHours,
-                diffMinutes,
-                diffSeconds
-            )
-        }
+        val countDownString = current.getCountDownString(holder.itemView.resources)
 
         holder.bind(
             current,

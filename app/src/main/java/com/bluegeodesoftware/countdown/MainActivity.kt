@@ -20,11 +20,6 @@ import com.bluegeodesoftware.countdown.viewmodel.TargetDateViewModelFactory
 import java.io.Serializable
 
 const val EXTRA_TARGET = "com.bluegeodesoftware.countdown.TARGET"
-const val EXTRA_ID = "com.bluegeodesoftware.countdown.ID"
-const val EXTRA_DATE = "com.bluegeodesoftware.countdown.DATE"
-const val EXTRA_TARGET_NAME = "com.bluegeodesoftware.countdown.TARGET_NAME"
-const val EXTRA_ALARM = "com.bluegeodesoftware.countdown.ALARM"
-const val EXTRA_RECUR = "com.bluegeodesoftware.countdown.RECUR"
 
 class MainActivity : AppCompatActivity() {
 
@@ -75,21 +70,9 @@ class MainActivity : AppCompatActivity() {
 
         if (requestCode == newTargetDateActivityRequestCode && resultCode == Activity.RESULT_OK) {
             intentData?.let { data ->
-                val epochTime = data.getLongExtra(EXTRA_DATE, 0)
-                val targetName = data.getStringExtra(EXTRA_TARGET_NAME)
-                val alarm = data.getBooleanExtra(EXTRA_ALARM, false)
-                val recur = data.getBooleanExtra(EXTRA_RECUR, false)
+                val target = data.getSerializableExtra(EXTRA_TARGET) as TargetDate
 
-                val date = epochTime / 1000
-
-                val targetDate = TargetDate(
-                    epoch_time = date,
-                    target_name = targetName ?: "",
-                    alarm = alarm,
-                    auto_recur = recur
-                )
-
-                targetDateViewModel.insert(targetDate)
+                targetDateViewModel.insert(target)
             }
         }
     }
@@ -117,8 +100,6 @@ class MainActivity : AppCompatActivity() {
     private fun adapterOnClick(targetDate: TargetDate) {
         val intent = Intent(this, ViewTargetActivity::class.java).apply {
             putExtra(EXTRA_TARGET, targetDate as Serializable)
-            putExtra(EXTRA_ID, targetDate.id)
-            putExtra(EXTRA_DATE, targetDate.epoch_time)
         }
         startActivity(intent)
     }

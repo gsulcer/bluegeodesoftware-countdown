@@ -62,32 +62,9 @@ class ViewTargetActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     fun minusOneSecond() {
         val target = intent.getSerializableExtra(EXTRA_TARGET) as TargetDate
-        val targetDate =
-            LocalDateTime.ofEpochSecond(intent.getLongExtra(EXTRA_DATE, 0), 0, ZoneOffset.UTC)
+        val targetDate = target.getLocaleTarget()
 
-        val now = LocalDateTime.now()
-
-        val diff = Duration.between(now, targetDate)
-        var diffMinutes = (diff.seconds / 60).toInt()
-        val diffSeconds = (diff.seconds % 60).toInt()
-        var diffHours = (diffMinutes / 60)
-        diffMinutes %= 60
-        val diffDays = (diffHours / 24)
-        diffHours %= 24
-
-        var countDownString = resources.getQuantityString(
-            R.plurals.countdown_with_days,
-            diffDays,
-            diffDays,
-            diffHours,
-            diffMinutes,
-            diffSeconds
-        )
-
-        if (diffDays <= 0) {
-            countDownString =
-                getString(R.string.countdown_without_days, diffHours, diffMinutes, diffSeconds)
-        }
+        val countDownString = target.getCountDownString(resources)
 
         findViewById<TextView>(R.id.textView2).apply {
             text = target.target_name
