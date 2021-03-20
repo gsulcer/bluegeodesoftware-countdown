@@ -9,7 +9,6 @@ import java.io.Serializable
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.ZoneOffset
-import java.util.*
 
 @Entity(tableName = "target_date")
 data class TargetDate(
@@ -26,12 +25,12 @@ data class TargetDate(
         auto_recur: Boolean
     ) : this(0, epoch_time, target_name, alarm, auto_recur)
 
-    public fun getLocaleTarget(): LocalDateTime
+    fun getLocaleTarget(): LocalDateTime
     {
         return LocalDateTime.ofEpochSecond(this.epoch_time, 0, ZoneOffset.UTC)
     }
 
-    public fun getCountDownString(resources: Resources): String
+    fun getCountDownString(resources: Resources): String
     {
         val now = LocalDateTime.now()
 

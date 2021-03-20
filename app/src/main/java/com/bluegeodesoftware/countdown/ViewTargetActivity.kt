@@ -12,9 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bluegeodesoftware.countdown.entity.TargetDate
 import com.bluegeodesoftware.countdown.viewmodel.TargetDateViewModel
 import com.bluegeodesoftware.countdown.viewmodel.TargetDateViewModelFactory
-import java.time.Duration
-import java.time.LocalDateTime
-import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 class ViewTargetActivity : AppCompatActivity() {

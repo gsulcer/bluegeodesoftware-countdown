@@ -101,8 +101,11 @@ class AddTargetDateActivity : AppCompatActivity() {
         return super.dispatchTouchEvent(ev)
     }
 
-    public fun saveDate(view:View) {
+
+    fun saveDate(view:View) {
         val resultIntent = Intent()
+
+        view.cancelPendingInputEvents()
 
         val targetName = findViewById<EditText>(R.id.editTextTargetName)
         val alarm = findViewById<Switch>(R.id.switchAlarm)
